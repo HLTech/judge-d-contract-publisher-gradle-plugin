@@ -1,0 +1,13 @@
+language: java
+sudo: true
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+
+jobs:
+  include:
+  - stage: build
+    script:
+    - ./gradlew clean build

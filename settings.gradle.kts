@@ -1,0 +1,1 @@
+rootProject.name = "judge-d-contract-publisher-gradle-plugin"
