@@ -24,7 +24,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(gradleApi())
     implementation(localGroovy())
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7")
     implementation("io.github.openfeign:feign-core:9.7.0")
     implementation("io.github.openfeign:feign-jackson:9.7.0")
 
