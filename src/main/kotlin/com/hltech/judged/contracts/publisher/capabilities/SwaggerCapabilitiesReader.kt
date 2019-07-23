@@ -1,6 +1,6 @@
 package com.hltech.judged.contracts.publisher.capabilities
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.gradle.api.Project
 import java.io.File
 
@@ -24,7 +24,7 @@ class SwaggerCapabilitiesReader : CapabilitiesReader {
             throw IllegalArgumentException("Cannot find swagger.json file inside dir: ${dir.absolutePath}")
         }
 
-        val mapper = ObjectMapper()
+        val mapper = jacksonObjectMapper()
         return mapper.writeValueAsString(mapper.readTree(swaggerFile))
     }
 
