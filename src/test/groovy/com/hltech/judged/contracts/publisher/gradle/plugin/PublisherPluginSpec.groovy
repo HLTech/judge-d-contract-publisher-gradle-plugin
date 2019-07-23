@@ -50,6 +50,7 @@ class PublisherPluginSpec extends Specification {
         given:
             stubFor(
                     post('/contracts/test-project/1.0')
+                            .withHeader('Content-Type', equalTo('application/json'))
                             .withRequestBody(matchingJsonPath('$.capabilities.rest.value',
                                     equalToJson(file('src/test/resources/swagger.json'))))
                             .withRequestBody(matchingJsonPath('$.capabilities.rest.mimeType',
@@ -76,6 +77,7 @@ class PublisherPluginSpec extends Specification {
         given:
             stubFor(
                     post('/contracts/test-project/1.0')
+                            .withHeader('Content-Type', equalTo('application/json'))
                             .withRequestBody(matchingJsonPath('$.capabilities',
                                     equalToJson('{}')))
                             .withRequestBody(matchingJsonPath("\$.expectations.['Animal Service'].rest.value",
