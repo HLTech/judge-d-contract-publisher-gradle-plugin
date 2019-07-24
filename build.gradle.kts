@@ -7,10 +7,11 @@ plugins {
     idea
     `java-gradle-plugin`
     id("com.palantir.idea-test-fix") version ("0.1.0")
+    id("com.gradle.plugin-publish") version ("0.10.0")
 }
 
 group = "com.hltech"
-version = "0.1.0-SNAPSHOT"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -31,4 +32,21 @@ dependencies {
     testImplementation(gradleTestKit())
     testImplementation("org.spockframework:spock-core:1.2-groovy-2.5")
     testImplementation("com.github.tomakehurst:wiremock:2.13.0")
+}
+
+pluginBundle {
+    website = "https://github.com/HLTech/judge-d-contract-publisher-gradle-plugin"
+    vcsUrl = "https://github.com/HLTech/judge-d-contract-publisher-gradle-plugin.git"
+    tags = listOf("contract-testing", "judge-dredd", "pact-gen", "swagger", "hltech")
+}
+
+gradlePlugin {
+    plugins {
+        create("contractsPublisher") {
+            id = "com.hltech.judged.contracts.publisher"
+            displayName = "Plugin for publishing contracts to judge-dredd"
+            description = "A plugin that helps you publish service expectations and capabilities to judge-dredd"
+            implementationClass = "com.hltech.judged.contracts.publisher.gradle.plugin.PublisherPlugin"
+        }
+    }
 }
