@@ -160,6 +160,85 @@ class PublisherPluginSpec extends Specification {
                     .task(':publishContracts').getOutcome() == TaskOutcome.SUCCESS
     }
 
+    def "should publish vaunt expectations when jms expectation is declared"() {
+        given:
+            stubFor(
+                    post('/contracts/test-project/1.0')
+                            .withHeader('Content-Type', equalTo('application/json'))
+                            .withRequestBody(matchingJsonPath('$.capabilities',
+                                    equalToJson('{}')))
+                            .withRequestBody(matchingJsonPath('$.expectations.audit-service.jms.value',
+                                    equalToJson("""
+                                    [
+                                      {
+                                        "destinationType": "QUEUE",
+                                        "destinationName": "audit_queue",
+                                        "body": {
+                                          "type": "object",
+                                          "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:AuditMessage",
+                                          "properties": {
+                                            "payload": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                    """)))
+                            .withRequestBody(matchingJsonPath('$.expectations.audit-service.jms.mimeType',
+                                    equalTo('application/json')))
+                            .withRequestBody(matchingJsonPath('$.expectations.remote-client.jms.value',
+                                    equalToJson("""
+                                    [
+                                      {
+                                        "destinationType": "QUEUE",
+                                        "destinationName": "reject_information_queue",
+                                        "body": {
+                                          "type": "object",
+                                          "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:RejectMessage",
+                                          "properties": {
+                                            "reason": {
+                                              "type": "string"
+                                            },
+                                            "code": {
+                                              "type": "integer"
+                                            }
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "destinationType": "QUEUE",
+                                        "destinationName": "accept_information_queue",
+                                        "body": {
+                                          "type": "object",
+                                          "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:AcceptMessage",
+                                          "properties": {
+                                            "id": {
+                                              "type": "integer"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                    """)))
+                            .withRequestBody(matchingJsonPath('$.expectations.remote-client.jms.mimeType',
+                                    equalTo('application/json')))
+                            .willReturn(aResponse().withStatus(200))
+            )
+
+        expect:
+            GradleRunner.create()
+                    .withProjectDir(testProjectDir.root)
+                    .withArguments('publishContracts',
+                            '-Pexpectations=jms',
+                            '-PvauntLocation=src/test/resources/vaunt',
+                            "-PjudgeDLocation=http://localhost:${wireMockRule.port()}")
+                    .withPluginClasspath()
+                    .forwardOutput()
+                    .build()
+                    .task(':publishContracts').getOutcome() == TaskOutcome.SUCCESS
+    }
+
     private static String file(String path) {
         return new File(path).text
     }
