@@ -1,12 +1,13 @@
 package com.hltech.judged.contracts.publisher.vaunt
 
+import com.hltech.vaunt.core.VauntSerializer
 import com.hltech.vaunt.core.domain.model.Service
 import org.gradle.api.Project
 import java.io.File
 
 class VauntFileReader {
 
-    private val mapper = vauntObjectMapper()
+    private val serializer = VauntSerializer()
 
     fun read(project: Project): List<Service> =
         when (val vauntLocation = project.properties[VAUNT_LOCATION_KEY]) {
@@ -25,7 +26,7 @@ class VauntFileReader {
 
         println("Found ${vauntFiles.size} vaunt files")
 
-        return vauntFiles.map { mapper.readValue(it, Service::class.java) }
+        return vauntFiles.map { serializer.readServiceDefinition(it) }
     }
 
     private companion object {

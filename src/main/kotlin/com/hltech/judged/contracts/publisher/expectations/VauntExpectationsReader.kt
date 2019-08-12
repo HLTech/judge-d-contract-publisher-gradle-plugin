@@ -2,14 +2,14 @@ package com.hltech.judged.contracts.publisher.expectations
 
 import com.google.common.collect.ArrayListMultimap
 import com.hltech.judged.contracts.publisher.vaunt.VauntFileReader
-import com.hltech.judged.contracts.publisher.vaunt.vauntObjectMapper
+import com.hltech.vaunt.core.VauntSerializer
 import com.hltech.vaunt.core.domain.model.Contract
 import org.gradle.api.Project
 
 class VauntExpectationsReader : ExpectationsReader {
 
     private val fileReader = VauntFileReader()
-    private val mapper = vauntObjectMapper()
+    private val serializer = VauntSerializer()
 
     override fun read(project: Project): List<Expectations> {
         val providerNameToContracts = fileReader.read(project)
@@ -21,6 +21,6 @@ class VauntExpectationsReader : ExpectationsReader {
 
         return providerNameToContracts
             .keySet()
-            .map { Expectations(it, "jms", mapper.writeValueAsString(providerNameToContracts[it]), "application/json") }
+            .map { Expectations(it, "jms", serializer.serialize(providerNameToContracts[it]), "application/json") }
     }
 }

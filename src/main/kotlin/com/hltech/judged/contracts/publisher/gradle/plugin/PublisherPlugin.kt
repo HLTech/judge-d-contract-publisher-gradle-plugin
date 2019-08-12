@@ -16,6 +16,8 @@ class PublisherPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         project.task("publishContracts") { task ->
+            task.description = "Publish contracts to remote judge-dredd instance."
+
             task.doLast {
                 println("serviceName=${project.name}")
                 println("serviceVersion=${project.version}")

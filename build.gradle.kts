@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.hltech"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
@@ -29,7 +29,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7")
     implementation("io.github.openfeign:feign-core:9.7.0")
     implementation("io.github.openfeign:feign-jackson:9.7.0")
-    implementation("com.hltech:vaunt-core:1.0.16")
+    implementation("com.hltech:vaunt-core:1.0.24")
 
     testImplementation(gradleTestKit())
     testImplementation("org.spockframework:spock-core:1.2-groovy-2.5")

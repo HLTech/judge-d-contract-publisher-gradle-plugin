@@ -115,7 +115,7 @@ class PublisherPluginSpec extends Specification {
                                       {
                                         "destinationType": "QUEUE",
                                         "destinationName": "request_for_information_queue",
-                                        "body": {
+                                        "message": {
                                           "type": "object",
                                           "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:RequestMessage",
                                           "properties": {
@@ -128,7 +128,7 @@ class PublisherPluginSpec extends Specification {
                                       {
                                         "destinationType": "TOPIC",
                                         "destinationName": "something_changed_topic",
-                                        "body": {
+                                        "message": {
                                           "type": "object",
                                           "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:ChangedEvent",
                                           "properties": {
@@ -173,7 +173,7 @@ class PublisherPluginSpec extends Specification {
                                       {
                                         "destinationType": "QUEUE",
                                         "destinationName": "audit_queue",
-                                        "body": {
+                                        "message": {
                                           "type": "object",
                                           "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:AuditMessage",
                                           "properties": {
@@ -193,7 +193,7 @@ class PublisherPluginSpec extends Specification {
                                       {
                                         "destinationType": "QUEUE",
                                         "destinationName": "reject_information_queue",
-                                        "body": {
+                                        "message": {
                                           "type": "object",
                                           "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:RejectMessage",
                                           "properties": {
@@ -209,7 +209,7 @@ class PublisherPluginSpec extends Specification {
                                       {
                                         "destinationType": "QUEUE",
                                         "destinationName": "accept_information_queue",
-                                        "body": {
+                                        "message": {
                                           "type": "object",
                                           "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:AcceptMessage",
                                           "properties": {
