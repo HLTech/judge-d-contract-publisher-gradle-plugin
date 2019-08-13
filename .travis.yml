@@ -19,4 +19,4 @@ jobs:
     - stage: publish
       if: branch = master AND type = push AND fork = false
       script:
-        - ./gradlew release publishPlugins -Pgradle.publish.key="$GRADLE_PUBLISH_KEY" -Pgradle.publish.secret="$GRADLE_PUBLISH_SECRET" -Prelease.disableChecks -Prelease.pushTagsOnly
+        - ./gradlew release publishPlugins -Pgradle.publish.key="$GRADLE_PUBLISH_KEY" -Pgradle.publish.secret="$GRADLE_PUBLISH_SECRET" -Prelease.disableChecks -Prelease.pushTagsOnly -Prelease.customUsername=matek2305 -Prelease.customPassword="$GITHUB_ACCESS_TOKEN"
