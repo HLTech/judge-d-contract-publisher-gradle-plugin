@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import pl.allegro.tech.build.axion.release.domain.TagNameSerializationConfig
 
 plugins {
     kotlin("jvm") version "1.3.21"
@@ -6,12 +7,21 @@ plugins {
     maven
     idea
     `java-gradle-plugin`
+
     id("com.palantir.idea-test-fix") version ("0.1.0")
     id("com.gradle.plugin-publish") version ("0.10.0")
+    id("pl.allegro.tech.build.axion-release") version ("1.10.2")
+}
+
+scmVersion {
+    tag(closureOf<TagNameSerializationConfig> {
+        versionSeparator = ""
+        prefix = "v"
+    })
 }
 
 group = "com.hltech"
-version = "1.0.2"
+version = scmVersion.version
 
 repositories {
     mavenCentral()
