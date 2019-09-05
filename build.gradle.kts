@@ -36,10 +36,7 @@ dependencies {
     implementation(gradleApi())
     implementation(localGroovy())
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.21")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7")
-    implementation("io.github.openfeign:feign-core:9.7.0")
-    implementation("io.github.openfeign:feign-jackson:9.7.0")
-    implementation("com.hltech:vaunt-core:1.0.24")
+    implementation("com.hltech:judge-d-contract-publisher-core:0.1.3")
 
     testImplementation(gradleTestKit())
     testImplementation("org.spockframework:spock-core:1.2-groovy-2.5")

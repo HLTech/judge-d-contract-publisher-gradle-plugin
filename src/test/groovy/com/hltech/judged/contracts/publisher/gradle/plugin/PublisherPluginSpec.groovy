@@ -39,7 +39,8 @@ class PublisherPluginSpec extends Specification {
         expect:
             GradleRunner.create()
                     .withProjectDir(testProjectDir.root)
-                    .withArguments('publishContracts')
+                    .withArguments('publishContracts',
+                            "-PjudgeDLocation=http://localhost:${wireMockRule.port()}")
                     .withPluginClasspath()
                     .forwardOutput()
                     .build()
@@ -49,7 +50,7 @@ class PublisherPluginSpec extends Specification {
     def "should publish swagger contract when rest capabilities is provided"() {
         given:
             stubFor(
-                    post('/contracts/test-project/1.0')
+                    post('/contracts/services/test-project/versions/1.0')
                             .withHeader('Content-Type', equalTo('application/json'))
                             .withRequestBody(matchingJsonPath('$.capabilities.rest.value',
                                     equalToJson(file('src/test/resources/swagger/swagger.json'))))
@@ -64,9 +65,9 @@ class PublisherPluginSpec extends Specification {
             GradleRunner.create()
                     .withProjectDir(testProjectDir.root)
                     .withArguments('publishContracts',
+                            "-PjudgeDLocation=http://localhost:${wireMockRule.port()}",
                             '-Pcapabilities=rest',
-                            '-PswaggerLocation=src/test/resources/swagger',
-                            "-PjudgeDLocation=http://localhost:${wireMockRule.port()}")
+                            '-PswaggerLocation=src/test/resources/swagger')
                     .withPluginClasspath()
                     .forwardOutput()
                     .build()
@@ -76,7 +77,7 @@ class PublisherPluginSpec extends Specification {
     def "should publish pacts when rest expectations is provided"() {
         given:
             stubFor(
-                    post('/contracts/test-project/1.0')
+                    post('/contracts/services/test-project/versions/1.0')
                             .withHeader('Content-Type', equalTo('application/json'))
                             .withRequestBody(matchingJsonPath('$.capabilities',
                                     equalToJson('{}')))
@@ -95,9 +96,9 @@ class PublisherPluginSpec extends Specification {
             GradleRunner.create()
                     .withProjectDir(testProjectDir.root)
                     .withArguments('publishContracts',
+                            "-PjudgeDLocation=http://localhost:${wireMockRule.port()}",
                             '-Pexpectations=rest',
-                            '-PpactsLocation=src/test/resources/pact',
-                            "-PjudgeDLocation=http://localhost:${wireMockRule.port()}")
+                            '-PpactsLocation=src/test/resources/pact')
                     .withPluginClasspath()
                     .forwardOutput()
                     .build()
@@ -107,7 +108,7 @@ class PublisherPluginSpec extends Specification {
     def "should publish vaunt capabilities when jms capability is declared"() {
         given:
             stubFor(
-                    post('/contracts/test-project/1.0')
+                    post('/contracts/services/test-project/versions/1.0')
                             .withHeader('Content-Type', equalTo('application/json'))
                             .withRequestBody(matchingJsonPath('$.capabilities.jms.value',
                                     equalToJson("""
@@ -117,7 +118,7 @@ class PublisherPluginSpec extends Specification {
                                         "destinationName": "request_for_information_queue",
                                         "message": {
                                           "type": "object",
-                                          "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:RequestMessage",
+                                          "id": "RequestMessage",
                                           "properties": {
                                             "name": {
                                               "type": "string"
@@ -130,7 +131,7 @@ class PublisherPluginSpec extends Specification {
                                         "destinationName": "something_changed_topic",
                                         "message": {
                                           "type": "object",
-                                          "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:ChangedEvent",
+                                          "id": "ChangedEvent",
                                           "properties": {
                                             "timestamp": {
                                               "type": "integer"
@@ -151,9 +152,9 @@ class PublisherPluginSpec extends Specification {
             GradleRunner.create()
                     .withProjectDir(testProjectDir.root)
                     .withArguments('publishContracts',
+                            "-PjudgeDLocation=http://localhost:${wireMockRule.port()}",
                             '-Pcapabilities=jms',
-                            '-PvauntLocation=src/test/resources/vaunt',
-                            "-PjudgeDLocation=http://localhost:${wireMockRule.port()}")
+                            '-PvauntLocation=src/test/resources/vaunt')
                     .withPluginClasspath()
                     .forwardOutput()
                     .build()
@@ -163,7 +164,7 @@ class PublisherPluginSpec extends Specification {
     def "should publish vaunt expectations when jms expectation is declared"() {
         given:
             stubFor(
-                    post('/contracts/test-project/1.0')
+                    post('/contracts/services/test-project/versions/1.0')
                             .withHeader('Content-Type', equalTo('application/json'))
                             .withRequestBody(matchingJsonPath('$.capabilities',
                                     equalToJson('{}')))
@@ -175,7 +176,7 @@ class PublisherPluginSpec extends Specification {
                                         "destinationName": "audit_queue",
                                         "message": {
                                           "type": "object",
-                                          "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:AuditMessage",
+                                          "id": "AuditMessage",
                                           "properties": {
                                             "payload": {
                                               "type": "string"
@@ -195,7 +196,7 @@ class PublisherPluginSpec extends Specification {
                                         "destinationName": "reject_information_queue",
                                         "message": {
                                           "type": "object",
-                                          "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:RejectMessage",
+                                          "id": "RejectMessage",
                                           "properties": {
                                             "reason": {
                                               "type": "string"
@@ -211,7 +212,7 @@ class PublisherPluginSpec extends Specification {
                                         "destinationName": "accept_information_queue",
                                         "message": {
                                           "type": "object",
-                                          "id": "urn:jsonschema:com:hltech:vaunt:generator:domain:representation:RepresentationWriterSpec:AcceptMessage",
+                                          "id": "AcceptMessage",
                                           "properties": {
                                             "id": {
                                               "type": "integer"
@@ -230,9 +231,9 @@ class PublisherPluginSpec extends Specification {
             GradleRunner.create()
                     .withProjectDir(testProjectDir.root)
                     .withArguments('publishContracts',
+                            "-PjudgeDLocation=http://localhost:${wireMockRule.port()}",
                             '-Pexpectations=jms',
-                            '-PvauntLocation=src/test/resources/vaunt',
-                            "-PjudgeDLocation=http://localhost:${wireMockRule.port()}")
+                            '-PvauntLocation=src/test/resources/vaunt')
                     .withPluginClasspath()
                     .forwardOutput()
                     .build()
