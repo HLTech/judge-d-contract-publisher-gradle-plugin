@@ -5,14 +5,14 @@ Gradle plugin to help integrate your project with judge-d in order to validate c
 ## Usage
 
 Add plugin to your project using plugins DSL:
-```
+```groovy
 plugins {
   id "com.hltech.judged.contracts.publisher" version "1.0.5"
 }
 ```
 
 or legacy plugin application:
-```
+```groovy
 buildscript {
   repositories {
     maven {
@@ -28,7 +28,7 @@ apply plugin: "com.hltech.judged.contracts.publisher"
 ```
 
 and run `publishContracts` task:
-```
+```sh
 ./gradlew publishContracts 
   -PjudgeDLocation=https://judge-d-ui.herokuapp.com/ 
   -Pcapabilities=rest 
