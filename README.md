@@ -42,6 +42,8 @@ and run `publishContracts` task:
 - **expectations** - list of comma separated values which determines expectations of you service against providers
 - **capabilities** - list of comma separated values which determines what capabalities your service expose
 
+*Neither expectations nor capabilities are required for now but nothing will be published in such case*
+
 ## Expectations
 Depending on what values you provide as expectations you also need to pass some additional parameters to make things work:
 - **pactsLocation** - required for **rest** expectation, points to directory where pacts files are stored
