@@ -55,6 +55,7 @@ Similar to expectations, you need to pass additional parameters for capabilities
 - **vauntLocation** - required for **jms** capability, points to directory where vaunt files are stored
 
 ## Useful links
+- [judge-d-contract-publisher-maven-plugin](https://github.com/HLTech/judge-d-contract-publisher-maven-plugin) - alternative plugin for Maven users
 - [judge-d](https://github.com/HLTech/judge-d) - tool used to test contracts between microservices
 - [pact-gen](https://github.com/HLTech/pact-gen) - library for generating pact files out of Feign clients
 - [vaunt](https://github.com/HLTech/vaunt) - toolkit to define and validate contracts in JMS
